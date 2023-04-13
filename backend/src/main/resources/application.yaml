@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name: oracle.jdbc.OracleDriver
+    oracleucp:
+      connection-factory-class-name: oracle.jdbc.replay.OracleDataSourceImpl
+      sql-for-validate-connection: select * from dual
+      connection-pool-name: JDBC_UCP_POOL
+      initial-pool-size: 1
+      min-pool-size: 1
+      max-pool-size: 1
+      inactive-connection-timeout: 10
+      query-timeout: 600
+      fast-connection-failover-enabled: false
+  jmx:
+    enabled: true
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true

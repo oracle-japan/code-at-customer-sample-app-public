@@ -1,0 +1,116 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+  namespace: frontend
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend
+  namespace: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v1
+    spec:
+      volumes:
+        - name: oauth-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: oauth-secret-provider
+        - name: ocir-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: ocir-secret-provider
+        - name: apm-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: apm-secret-provider
+      containers:
+        - name: frontend
+          image: phx.ocir.io/orasejapan/code-at-customer/frontend:${tag}
+          imagePullPolicy: Always
+          ports:
+            - name: api
+              containerPort: 8080
+          env:
+            - name: backend.url.base
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: backendUrlBase
+            - name: backend.url
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: backendUrl
+            - name: oauth.client-id
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: clientId
+            - name: oauth.client-secret
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: clientSecret
+            - name: oauth.scope
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: scope
+            - name: oauth.url
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secret
+                  key: oauthUrl
+            - name: oauth.cache-token
+              value: "false"
+            # APM Properties
+            - name: com_oracle_apm_agent_service_name
+              value: frontend_spring-boot
+            - name: com_oracle_apm_agent_private_data_key
+              valueFrom:
+                secretKeyRef:
+                  name: apm-secret
+                  key: privateKey
+            - name: com_oracle_apm_agent_data_upload_endpoint
+              valueFrom:
+                secretKeyRef:
+                  name: apm-secret
+                  key: dataUploadEndpoint
+          volumeMounts:
+            - name: oauth-secret
+              mountPath: /mnt/oauth-secrets-store
+              readOnly: true
+            - name: ocir-secret
+              mountPath: /mnt/ocir-secrets-store
+              readOnly: true
+            - name: apm-secret
+              mountPath: /mnt/apm-secrets-store
+              readOnly: true
+      imagePullSecrets:
+        - name: ocir-secret

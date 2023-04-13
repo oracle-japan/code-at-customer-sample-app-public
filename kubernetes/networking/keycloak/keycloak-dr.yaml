@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: keycloak-dr
+  namespace: keycloak
+spec:
+  host: keycloak
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+    - name: v1
+      labels:
+        app: keycloak
+        tier: frontend
+    - name: v1-mysql
+      labels:
+        app: keycloak
+        tier: mysql

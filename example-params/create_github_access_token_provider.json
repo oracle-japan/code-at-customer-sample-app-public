@@ -1,0 +1,9 @@
+{
+    "accessToken": "__github_pat__",
+    "apiEndpoint": "https://github.com",
+    "compartmentId": "__compartment_id__",
+    "displayName": "github-provider",
+    "waitForState": [
+        "ACTIVE"
+    ]
+}

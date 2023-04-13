@@ -1,0 +1,14 @@
+{
+    "compartmentId": "__compartment_id__",
+    "configSourceBranchName": "main",
+    "configSourceConfigurationSourceProviderId": "__provider_id__",
+    "configSourceRepositoryUrl": "https://github.com/oracle-japan/code-at-customer-sample-app",
+    "configSourceWorkingDirectory": "terraform",
+    "displayName": "code-at-customer-infra",
+    "terraformVersion": "1.2.x",
+    "variables": {
+        "compartment_ocid": "__compartment_id__",
+        "region": "__region__",
+        "tenancy_ocid": "ocid1.tenancy.oc1..aaaaaaaa3mb7wrcy2ls3u3jsy2soq5ck3lc3q4mczitpdaymbuazc5tkguca"
+    }
+}

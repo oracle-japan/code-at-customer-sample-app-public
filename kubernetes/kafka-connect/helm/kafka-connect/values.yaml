@@ -1,0 +1,29 @@
+# Default values for kafka-connect.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: kafka-connect
+
+vault_id: ocid1.vault....
+
+kafka_connect:
+  image: kafka-connect-jdbc # kafka-connect 本体のイメージ
+  oci_streaming:
+    pool: ocid1.streampool.oc1.... # OCI Streaming Pool ID
+  bootstrap_servers: streaming.<region>.oci.oraclecloud.com:9092
+  topics:
+    config_storage: "ocid1.connectharness.oc1...-config"
+    offset_storage: "ocid1.connectharness.oc1...-offset"
+    status_storage: "ocid1.connectharness.oc1...-status"
+  rest_advertised_host_name: kafak-connect
+  secret_name: kafka-connect-secret
+
+adb_wallet_download:
+  image: download-adb-wallet 
+  databases: # 接続に必要な分だけ - /mnt/wallet/<name> に Wallet を配備する
+  - name: source 
+    id: ocid1.autonomousdatabase.oc1....
+  - name: sink 
+    id: ocid1.autonomousdatabase.oc1....
+
+

@@ -1,0 +1,8 @@
+{
+    "jobOperationDetails": {
+        "isProviderUpgradeRequired": true,
+        "operation": "PLAN"
+    },
+    "operation": "PLAN",
+    "stackId": "__stack_id__"
+}

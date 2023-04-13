@@ -1,0 +1,9 @@
+{
+    "jobOperationDetails": {
+        "isProviderUpgradeRequired": true,
+        "operation": "APPLY",
+        "executionPlanStrategy": "AUTO_APPROVED"
+    },
+    "operation": "APPLY",
+    "stackId": "__stack_id__"
+}

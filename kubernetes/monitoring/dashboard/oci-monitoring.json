@@ -1,0 +1,4125 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 9,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 98,
+            "panels": [],
+            "title": "README",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "gridPos": {
+                "h": 14,
+                "w": 24,
+                "x": 0,
+                "y": 1
+            },
+            "id": 100,
+            "options": {
+                "content": "# Observability for OCI\n\n## Metrics\n\nOCI の [Grafana Plugin - Oracle Cloud Infrastructure Metrics](https://grafana.com/grafana/plugins/oci-metrics-datasource/) を用いて、以下のサービスの Metrics を可視化しています。\n\n- OKE\n- Compute\n- Load Balancer\n- API Gateway\n- Application Performance Monitoring - Monitoring\n- Application Performance Monitoring - Real User Monitoring\n- Autonomous Database\n\n## Tracing\n\nOCI APM を用いて分散トレーシングの情報を可視化しています。\n\n- [トレース・エクスプローラー](https://cloud.oracle.com/apm/apm-traces/traceList?apmDomain=ocid1.apmdomain.oc1.phx.amaaaaaassl65iqa52zu74k3oqxvfut2wk2ectmfafgjvnt5pmd6ouwvdkpq&apmTime=last_15_minutes&apmFilter=c2hvdyAodHJhY2VzKSBUcmFjZVN0YXR1cyBhcyBTdGF0dXMsCiAgICBUcmFjZUZpcnN0U3BhblN0YXJ0VGltZSBhcyAiU3RhcnQgVGltZSIsCiAgICBTZXJ2aWNlTmFtZSBhcyBTZXJ2aWNlLAogICAgT3BlcmF0aW9uTmFtZSBhcyBPcGVyYXRpb24sCiAgICBUcmFjZUR1cmF0aW9uIGFzIER1cmF0aW9uLAogICAgc3Bhbl9zdW1tYXJ5KCkgYXMgU3BhbnMsCiAgICBFcnJvckNvdW50IGFzICJTcGFuIEVycm9ycyIKICB3aGVyZSAoQXBtcnVtUGFnZVVwZGF0ZVR5cGU8PidDbGljaycgb3IgQXBtcnVtUGFnZVVwZGF0ZVR5cGUgaXMgb21pdHRlZCkKICBvcmRlciBieSBUcmFjZUZpcnN0U3BhblN0YXJ0VGltZSBkZXNj&region=us-phoenix-1)\n\n## Logging\n\n各 Worker Node の `/var/log/containers/*` に出力されるログをカスタム・ログとして収集し、OCI Logging で確認することができます。",
+                "mode": "markdown"
+            },
+            "pluginVersion": "9.0.1",
+            "title": "README",
+            "type": "text"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 15
+            },
+            "id": 20,
+            "panels": [],
+            "title": "OKE",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 9,
+                "x": 0,
+                "y": 16
+            },
+            "id": 10,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "NodeState",
+                    "namespace": "oci_oke",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Node State",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 10,
+                "x": 9,
+                "y": 16
+            },
+            "id": 12,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "KubernetesNodeCondition",
+                    "namespace": "oci_oke",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Node Condition",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 19,
+                "y": 16
+            },
+            "id": 14,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.0.1",
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "UnschedulablePods",
+                    "namespace": "oci_oke",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Unschedulable Pods",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 24
+            },
+            "id": 16,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.0.1",
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "APIServerRequestCount",
+                    "namespace": "oci_oke",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "K8s API Server Requests",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 24
+            },
+            "id": 18,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "APIServerResponseCount",
+                    "namespace": "oci_oke",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "K8s API Server Responses",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 32
+            },
+            "id": 2,
+            "panels": [],
+            "title": "Compute (OKE Worker Nodes)",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 33
+            },
+            "id": 32,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "CpuUtilization",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "CPU Utilization",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 33
+            },
+            "id": 34,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "MemoryUtilization",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Memoty Utilization",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 33
+            },
+            "id": 40,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "LoadAverage",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Load Average",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 0,
+                "y": 41
+            },
+            "id": 42,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "NetworksBytesIn",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Network IO - IN",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 41
+            },
+            "id": 44,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "NetworksBytesOut",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Network IO - OUT",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 41
+            },
+            "id": 36,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "DiskBytesRead",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Disk IO - Read",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 18,
+                "y": 41
+            },
+            "id": 38,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "DiskBytesWritten",
+                    "namespace": "oci_computeagent",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Disk IO - Write",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 49
+            },
+            "id": 66,
+            "panels": [],
+            "title": "Application Performance Monitoring - Monitoring",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 0,
+                "y": 50
+            },
+            "id": 72,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "ProcessCpuLoad",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Process CPU Load",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 50
+            },
+            "id": 74,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "SystemCpuLoad",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "System CPU Load",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 50
+            },
+            "id": 70,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "HeapUsed",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Heap Used",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 18,
+                "y": 50
+            },
+            "id": 76,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "SystemPhysicalMemoryFree",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "System Physical Memory Free",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 58
+            },
+            "id": 78,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "TotalTraceCount",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Total Trace Count",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 58
+            },
+            "id": 80,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "TotalSpanCount",
+                    "namespace": "oracle_apm_monitoring",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Total Span Count",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 66
+            },
+            "id": 68,
+            "panels": [],
+            "title": "Application Performance Monitoring - Real User Monitoring",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 67
+            },
+            "id": 94,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "PageViews",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Page Views",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 67
+            },
+            "id": 92,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "FrustratedPageViews",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Frustrated Page Views",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 67
+            },
+            "id": 96,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "PageRenderTime",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Page Render Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 75
+            },
+            "id": 82,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "ActiveSessionsPerMin",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Active Sessions per Min",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 75
+            },
+            "id": 90,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "ConnectCount",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Connect Counts",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 83
+            },
+            "id": 88,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "ApdexScore",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Ajax Score",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 83
+            },
+            "id": 84,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "AjaxCalls",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Ajax Calls",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 83
+            },
+            "id": 86,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "AjaxErrors",
+                    "namespace": "oracle_apm_rum",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Ajax Errors",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 91
+            },
+            "id": 4,
+            "panels": [],
+            "title": "Load Balancer (Kubernetes Service)",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 92
+            },
+            "id": 46,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "ActiveConnections",
+                    "namespace": "oci_lbaas",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Active Connections",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 92
+            },
+            "id": 52,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "PeakBandwidth",
+                    "namespace": "oci_lbaas",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Peak Bandwidth",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 100
+            },
+            "id": 48,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "HttpRequests",
+                    "namespace": "oci_lbaas",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "HTTP Requests",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 100
+            },
+            "id": 50,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "BytesReceived",
+                    "namespace": "oci_lbaas",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Bytes Received",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 100
+            },
+            "id": 54,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "BytesSent",
+                    "namespace": "oci_lbaas",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Bytes Sent",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 108
+            },
+            "id": 8,
+            "panels": [],
+            "title": "API Gateway",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 109
+            },
+            "id": 22,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "HttpRequests",
+                    "namespace": "oci_apigateway",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "HTTP Requests",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 109
+            },
+            "id": 24,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "HttpResponses",
+                    "namespace": "oci_apigateway",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Http Responses",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 117
+            },
+            "id": 30,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "BytesSent",
+                    "namespace": "oci_apigateway",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Bytes Sent",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 117
+            },
+            "id": 28,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "BytesReceived",
+                    "namespace": "oci_apigateway",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Bytes Received",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 117
+            },
+            "id": 26,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "Latency",
+                    "namespace": "oci_apigateway",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Latency",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 125
+            },
+            "id": 6,
+            "panels": [],
+            "title": "Autonomous Database",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 126
+            },
+            "id": 56,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "CpuUtilization",
+                    "namespace": "oci_autonomous_database",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "CPU Utilization",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 126
+            },
+            "id": 64,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "StorageUtilization",
+                    "namespace": "oci_autonomous_database",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Storage Utilization",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 134
+            },
+            "id": 60,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "DatabaseAvailability",
+                    "namespace": "oci_autonomous_database",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Database Availability",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 134
+            },
+            "id": 58,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "CurrentLogons",
+                    "namespace": "oci_autonomous_database",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Current Logons",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "oci-metrics-datasource",
+                "uid": "kqeNMcf4k"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 134
+            },
+            "id": 62,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "aggregation": "mean()",
+                    "compartment": "ocid1.compartment.oc1..aaaaaaaaiwbdcl4r4aht6qhovvxi2kzphxoojzm7x7p2aml47egef24w4kyq",
+                    "datasource": {
+                        "type": "oci-metrics-datasource",
+                        "uid": "kqeNMcf4k"
+                    },
+                    "dimensions": [],
+                    "legendFormat": "",
+                    "metric": "StorageUsed",
+                    "namespace": "oci_autonomous_database",
+                    "refId": "A",
+                    "region": "us-phoenix-1",
+                    "resolution": "auto",
+                    "resourcegroup": "select resource group",
+                    "tenancy": "select tenancy",
+                    "tenancymode": "single",
+                    "window": "auto"
+                }
+            ],
+            "title": "Storage Used",
+            "type": "timeseries"
+        }
+    ],
+    "refresh": "5s",
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-6h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "OCI Monitoring",
+    "uid": "_ySJMcf4z",
+    "version": 10,
+    "weekStart": ""
+}

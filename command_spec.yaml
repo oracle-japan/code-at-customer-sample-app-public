@@ -1,0 +1,48 @@
+version: 0.1
+component: command
+timeoutInSeconds: 10000
+shell: bash
+
+inputArtifacts:
+  # Optional - need for `terraform plan`
+  - name: create_plan_job_json
+    type: GENERIC_ARTIFACT
+    artifactId: ${create_plan_job_json_ocid}
+    location: ./create_plan_job.json
+  - name: create_apply_job_json
+    type: GENERIC_ARTIFACT
+    artifactId: ${create_apply_job_json_ocid}
+    location: ./create_apply_job.json
+
+steps:
+  # Optional - exec `terraform plan`
+  # - type: Command
+  #   name: "Plan stack"
+  #   command: |
+  #     stack_id=$(oci resource-manager stack list --compartment-id ${compartment_id} \
+  #       --sort-by TIMECREATED \
+  #       --sort-order DESC \
+  #       --query 'data[0].id' \
+  #       --raw-output
+  #     )
+  #     sed -i -e "s@__stack_id__@${stack_id}@g" ./create_plan_job.json
+  #     oci resource-manager job create \
+  #       --from-json file://./create_plan_job.json
+  #   onFailure:
+  #     - type: Command
+  #       commnd: |
+  #         echo "Failure successfully handled"
+  #       timeoutInSeconds: 60
+
+  - type: Command
+    name: "Apply stack"
+    command: |
+      stack_id=`oci resource-manager stack list --compartment-id ${compartment_id} --query 'data[0].id' --raw-output`
+      sed -i -e "s@__stack_id__@${stack_id}@g" ./create_apply_job.json
+      oci resource-manager job create \
+        --from-json file://./create_apply_job.json
+    onFailure:
+      - type: Command
+        commnd: |
+          echo "Failure successfully handled"
+        timeoutInSeconds: 60

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <!-- OCI APM -->
+    <script>
+      window.apmrum = (window.apmrum || {});
+      window.apmrum.serviceName='frontend_browser';
+      window.apmrum.webApplication='Frontend';
+      window.apmrum.ociDataUploadEndpoint='__APM_DATA_UPLOAD_ENDPOINT__';
+      window.apmrum.OracleAPMPublicDataKey='__APM_PUBLIC_DATA_KEY__';
+      window.apmrum.traceSupportingEndpoints =  [
+        { headers: [ 'APM' ], hostPattern: '.*' },
+        { headers: [ ], hostPattern: '.*' } 
+      ];  
+    </script>
+    <script async crossorigin="anonymous" src="__APM_DATA_UPLOAD_ENDPOINT__/static/jslib/apmrum.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>Frontend App</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: keycloak
+  name: keycloak-mysql
+  labels:
+    app: keycloak
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: keycloak
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: keycloak
+  name: mysql-pv-claim
+  labels:
+    app: keycloak
+spec:
+  storageClassName: "oci-bv"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: keycloak
+  name: keycloak-mysql
+  labels:
+    app: keycloak
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: keycloak
+        tier: mysql
+    spec:
+      containers:
+        - image: mysql:8.0
+          name: mysql
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: password
+            - name: MYSQL_USER
+              value: "keycloak"
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: user-password
+            - name: LANG
+              value: C.UTF-8
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: mysql-server-initdb
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+        - name: mysql-server-initdb
+          configMap:
+            name: mysql-server-initdb-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: keycloak
+  name: mysql-server-initdb-config
+data:
+  createdb.sql: |
+    CREATE DATABASE keycloak;
+    GRANT ALL ON keycloak.* TO keycloak;

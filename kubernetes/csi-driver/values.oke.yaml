@@ -1,0 +1,9 @@
+provider:
+  image:
+    repository: ghcr.io/oracle-samples/oci-secrets-store-csi-driver-provider
+secrets-store-csi-driver:
+  install: true
+  syncSecret:
+    enabled: true
+  enableSecretRotation: true
+  rotationPollInterval: 15m

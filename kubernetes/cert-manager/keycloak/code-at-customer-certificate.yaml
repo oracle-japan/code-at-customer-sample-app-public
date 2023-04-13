@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: code-at-customer-certificate
+  namespace: keycloak
+spec:
+  secretName: code-at-customer-certificate
+  duration: 2160h
+  renewBefore: 360h
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - "*.shukawam.com"
+  issuerRef:
+    name: code-at-customer-issuer
+    kind: Issuer
+    group: cert-manager.io

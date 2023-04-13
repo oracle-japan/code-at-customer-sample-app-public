@@ -1,0 +1,64 @@
+name: build-frontend-helidon
+on: 
+  workflow_dispatch:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/build-frontend-helidon.yaml'
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/code-at-customer/frontend-helidon
+  APM_PRIVATE_DATA_KEY: ${{ secrets.APM_PRIVATE_DATA_KEY }}
+  APM_PUBLIC_DATA_KEY: ${{ secrets.APM_PUBLIC_DATA_KEY }}
+  APM_DATA_UPLOAD_ENDPOINT: ${{ secrets.APM_DATA_UPLOAD_ENDPOINT }}
+
+jobs:
+  build-vue-and-helidon-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v3
+        #with:
+        #  ref: 'feature/frontend'
+          
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.IMAGE }}
+          tags: |
+            #type=ref,event=branch
+            #type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value={{date 'YYYYMMDDHHmm'}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile_helidon
+          build-args: |
+            APM_JAVA_VERSION=${{ env.APM_JAVA_VERSION }}
+            APM_SERVICE_NAME=${{ env.APM_SERVICE_NAME }}
+            APM_PRIVATE_DATA_KEY=${{ env.APM_PRIVATE_DATA_KEY }}
+            APM_PUBLIC_DATA_KEY=${{ env.APM_PUBLIC_DATA_KEY }}
+            APM_DATA_UPLOAD_ENDPOINT=${{ env.APM_DATA_UPLOAD_ENDPOINT }}
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.IMAGE }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
+

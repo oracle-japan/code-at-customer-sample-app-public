@@ -1,0 +1,14 @@
+secretGenerator:
+  - name: mysql-password
+    namespace: keycloak
+    literals:
+      - password=8j4bB4ueiSCV
+      - user-password=Dho2gK55dUFd
+  - name: keycloak-password
+    namespace: keycloak
+    literals:
+      - password=cww5x6movtdopbsf
+resources:
+  - mysql-deployment.yaml
+  - keycloak-deployment.yaml
+  - keycloak-ingress.yaml

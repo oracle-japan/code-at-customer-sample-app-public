@@ -1,0 +1,56 @@
+name: build-download-adb-wallet
+on: 
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #  - feature/download-adb-wallet
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - 'download-adb-wallet/**'
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/code-at-customer/download-adb-wallet
+
+jobs:
+  build-download-adb-wallet-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v3
+        #with:
+        #  ref: 'feature/download-adb-wallet'
+          
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.IMAGE }}
+          tags: |
+            #type=ref,event=branch
+            #type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value={{date 'YYYYMMDDHHmm'}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./download-adb-wallet
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.IMAGE }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
+

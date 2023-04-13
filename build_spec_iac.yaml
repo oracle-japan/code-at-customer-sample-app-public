@@ -1,0 +1,70 @@
+version: 0.1
+component: build
+timeoutInSeconds: 10000
+shell: bash
+env:
+  vaultVariables:
+    github_pat: ocid1.vaultsecret.oc1.phx.amaaaaaassl65iqalnd636wezleaztepze77pioo6h5a3n7zprh36puu2mzq
+
+inputArtifacts:
+  - name: create_github_access_token_provider_json
+    type: GENERIC_ARTIFACT
+    artifactId: ${create_github_access_token_provider_json_ocid}
+    location: ${OCI_PRIMARY_SOURCE_DIR}/create_github_access_token_provider.json
+  - name: create_stack_json
+    type: GENERIC_ARTIFACT
+    artifactId: ${create_stack_json_ocid}
+    location: ${OCI_PRIMARY_SOURCE_DIR}/create_stack.json
+
+steps:
+  - type: Command
+    name: "Create GitHub Provider"
+    command: |
+      provider=$(oci resource-manager configuration-source-provider list \
+        --compartment-id ${compartment_id} \
+        --query 'data.items[?"display-name"==`github-provider`].id'
+      )
+      if [ -z $provider ]; then
+        echo "NOT Exist GitHub Provider."
+        sed -i -e "s@__compartment_id__@${compartment_id}@g" ${OCI_PRIMARY_SOURCE_DIR}/create_github_access_token_provider.json
+        sed -i -e "s@__github_pat__@${github_pat}@g" ${OCI_PRIMARY_SOURCE_DIR}/create_github_access_token_provider.json
+        oci resource-manager configuration-source-provider create-github-access-token-provider \
+          --from-json file://${OCI_PRIMARY_SOURCE_DIR}/create_github_access_token_provider.json
+      else
+        echo "Already exist GitHub Provider."
+      fi
+    onFailure:
+      - type: Command
+        commnd: |
+          echo "Failure successfully handled"
+        timeoutInSeconds: 60
+
+  - type: Command
+    name: "Create Resource Manager Stack"
+    command: |
+      stack=$(oci resource-manager stack list \
+        --compartment-id ${compartment_id} \
+        --query 'data[?"display-name"==`code-at-customer-infra`].id'
+      )
+      if [ -z $stack ]; then
+        echo "NOT Exist Infra stack."
+        provider_id=$(oci resource-manager configuration-source-provider list \
+          --compartment-id ${compartment_id} \
+          --sort-by TIMECREATED \
+          --sort-order DESC \
+          --query 'data.items[0].id' \
+          --raw-output
+        )
+        sed -i -e "s@__compartment_id__@${compartment_id}@g" ${OCI_PRIMARY_SOURCE_DIR}/create_stack.json
+        sed -i -e "s@__region__@${region}@g" ${OCI_PRIMARY_SOURCE_DIR}/create_stack.json
+        sed -i -e "s@__provider_id__@${provider_id}@g" ${OCI_PRIMARY_SOURCE_DIR}/create_stack.json
+        oci resource-manager stack create-from-git-provider \
+          --from-json file://${OCI_PRIMARY_SOURCE_DIR}/create_stack.json
+      else
+        echo "Already exist Infra stack."
+      fi
+    onFailure:
+      - type: Command
+        commnd: |
+          echo "Failure successfully handled"
+        timeoutInSeconds: 60

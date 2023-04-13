@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: backend
+  labels:
+    app: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: backend
+  namespace: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v1
+    spec:
+      volumes:
+        - name: wallet
+          emptyDir: {}
+        - name: datasource-secret
+          csi:
+            driver: "secrets-store.csi.k8s.io"
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "datasource-secret-provider"
+        - name: ocir-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: ocir-secret-provider
+        - name: apm-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: apm-secret-provider
+      initContainers:
+        - image: phx.ocir.io/orasejapan/code-at-customer/download-adb-wallet:${tag}
+          imagePullPolicy: Always
+          name: download-wallet
+          volumeMounts:
+            - mountPath: /var/cache
+              name: wallet
+            - name: ocir-secret
+              mountPath: /mnt/ocir-secrets-store
+              readOnly: true
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              python /oci/download-adb-wallet.py
+              --id ocid1.autonomousdatabase.oc1.phx.anyhqljtssl65iqa6yfoi3nqfl3tdxoi6tyhtlcu4nf4dkrvxgparwjh6pxa
+              --dir /var/cache/wallet
+      containers:
+        - name: backend
+          image: phx.ocir.io/orasejapan/code-at-customer/backend:${tag}
+          imagePullPolicy: Always
+          ports:
+            - name: api
+              containerPort: 8080
+          env:
+            # Data Source
+            - name: spring.datasource.url
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret
+                  key: url
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret
+                  key: username
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: datasource-secret
+                  key: password
+            # APM Properties
+            - name: com_oracle_apm_agent_service_name
+              value: backend_spring-boot
+            - name: com_oracle_apm_agent_private_data_key
+              valueFrom:
+                secretKeyRef:
+                  name: apm-secret
+                  key: privateKey
+            - name: com_oracle_apm_agent_data_upload_endpoint
+              valueFrom:
+                secretKeyRef:
+                  name: apm-secret
+                  key: dataUploadEndpoint
+          volumeMounts:
+            - mountPath: /var/cache
+              name: wallet
+              readOnly: true
+            - mountPath: /mnt/datasource-secrets-store
+              name: datasource-secret
+              readOnly: true
+            - name: ocir-secret
+              mountPath: /mnt/ocir-secrets-store
+              readOnly: true
+            - name: apm-secret
+              mountPath: /mnt/apm-secrets-store
+              readOnly: true
+      imagePullSecrets:
+        - name: ocir-secret

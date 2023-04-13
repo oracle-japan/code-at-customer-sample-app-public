@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: download-adb-wallet-test
+  #namespace: {{ namespace }}
+spec:
+  #imagePullSecrets: 
+  #- name: {{ docker-registry-secret }}
+  restartPolicy: Never
+  containers:
+  # Main Container - 本来は Wallet を使った ADB 接続アプリ
+  - image: busybox:latest
+    name: main-container
+    volumeMounts:
+    - mountPath: /var/cache
+      name: cache-volume
+    command: ["/bin/sh"]
+    args:
+    - -c
+    - ls -l /var/cache/wallet && echo "Wallet password is $(cat /var/cache/wallet/password)"
+  initContainers:
+  # Init Container - Wallet ファイルのダウンロード
+  - image: {{ download-adb-wallet の コンテナイメージ }}
+    imagePullPolicy: Always
+    name: download-wallet
+    volumeMounts:
+    - mountPath: /var/cache
+      name: cache-volume
+    env:
+      - name: ADB_OCID
+        value: {{ Autonomous Database の OCID }}
+    #command: ["python", "/oci/download-adb-wallet.py"]
+    args:
+    - --id 
+    - $(ADB_OCID)
+    - --dir 
+    - /var/cache/wallet
+  volumes:
+  - name: cache-volume
+    emptyDir: {}

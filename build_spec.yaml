@@ -1,0 +1,46 @@
+version: 0.1
+component: build
+timeoutInSeconds: 10000
+shell: bash
+env:
+  vaultVariables:
+    ghcr_username: ocid1.vaultsecret.oc1.phx.amaaaaaassl65iqats4e2unwotmcdmt3ghbvpl7ws3qvcerizjw6bb4rrpua
+    ghcr_password: ocid1.vaultsecret.oc1.phx.amaaaaaassl65iqauilrlf4i5ek6gnx33p3o2qiiq6jlamxjsmbzzcly5ynq
+  exportedVariables:
+    - tag
+
+steps:
+  - type: Command
+    name: "Export variables"
+    command: |
+      tag=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
+    onFailure:
+      - type: Command
+        commnd: |
+          echo "Failure successfully handled"
+        timeoutInSeconds: 60
+
+  - type: Command
+    name: "Pull container image"
+    command: |
+      docker login ghcr.io -u ${ghcr_username} -p ${ghcr_password}
+      docker pull ghcr.io/oracle-japan/code-at-customer/frontend:latest
+      docker pull ghcr.io/oracle-japan/code-at-customer/backend:latest
+      docker pull ghcr.io/oracle-japan/code-at-customer/download-adb-wallet:latest
+
+outputArtifacts:
+  - name: frontend-manifest
+    type: BINARY
+    location: kubernetes/apps/frontend/frontend.yaml
+  - name: frontend-image
+    type: DOCKER_IMAGE
+    location: ghcr.io/oracle-japan/code-at-customer/frontend:latest
+  - name: backend-manifest
+    type: BINARY
+    location: kubernetes/apps/backend/backend.yaml
+  - name: backend-image
+    type: DOCKER_IMAGE
+    location: ghcr.io/oracle-japan/code-at-customer/backend:latest
+  - name: download-adb-wallet-image
+    type: DOCKER_IMAGE
+    location: ghcr.io/oracle-japan/code-at-customer/download-adb-wallet:latest

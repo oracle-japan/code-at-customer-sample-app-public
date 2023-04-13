@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: code-at-customer-issuer
+  namespace: keycloak
+spec:
+  ca:
+    secretName: code-at-customer-ca-secret

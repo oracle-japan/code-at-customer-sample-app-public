@@ -1,0 +1,56 @@
+name: build-kafka-connect
+on: 
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #  - feature/kafka-connect
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - 'kubernetes/kafka-connect/**'
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/code-at-customer/kafka-connect
+
+jobs:
+  build-kafka-connect-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v3
+        #with:
+        #  ref: 'feature/kafka-connect'
+          
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.IMAGE }}
+          tags: |
+            #type=ref,event=branch
+            #type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value={{date 'YYYYMMDDHHmm'}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/kafka-connect/image
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.IMAGE }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
+

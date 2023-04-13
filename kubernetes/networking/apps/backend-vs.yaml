@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: backend-vs
+  namespace: backend
+spec:
+  hosts:
+    - api.shukawam.com
+  gateways:
+    - istio-system/code-at-customer-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api/items
+      route:
+        - destination:
+            host: backend
+            port:
+              number: 8080
