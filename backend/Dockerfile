@@ -3,7 +3,7 @@ ARG APM_JAVA_VERSION
 WORKDIR /backend
 COPY . .
 RUN ./mvnw package -DskipTests
-COPY apm-installer/*.jar .
+# COPY apm-installer/*.jar .
 # RUN mkdir apm && java -jar ./apm-java-agent-installer-${APM_JAVA_VERSION}.jar provision-agent \
 #   -service-name=overwritebyenv \
 #   -destination=./apm \

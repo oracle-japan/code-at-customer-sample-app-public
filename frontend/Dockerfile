@@ -14,7 +14,7 @@ WORKDIR /frontend
 COPY front-spring .
 COPY --from=build-vue /frontend/dist src/main/resources/static/
 RUN ./mvnw package -DskipTests
-COPY apm/*.jar .
+# COPY apm/*.jar .
 # RUN mkdir apm && java -jar ./apm-java-agent-installer-${APM_JAVA_VERSION}.jar provision-agent \
 #   -service-name=overwritebyenv \
 #   -destination=./apm \
