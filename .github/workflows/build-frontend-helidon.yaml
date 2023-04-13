@@ -11,7 +11,7 @@ on:
       - '.github/workflows/build-frontend-helidon.yaml'
 
 env:
-  IMAGE: ghcr.io/${{ github.repository_owner }}/code-at-customer/frontend-helidon
+  IMAGE: ghcr.io/${{ github.repository }}/frontend-helidon
   APM_PRIVATE_DATA_KEY: ${{ secrets.APM_PRIVATE_DATA_KEY }}
   APM_PUBLIC_DATA_KEY: ${{ secrets.APM_PUBLIC_DATA_KEY }}
   APM_DATA_UPLOAD_ENDPOINT: ${{ secrets.APM_DATA_UPLOAD_ENDPOINT }}
