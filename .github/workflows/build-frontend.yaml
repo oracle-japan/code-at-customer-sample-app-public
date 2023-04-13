@@ -11,7 +11,7 @@ on:
       - '.github/workflows/build-frontend.yaml'
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}frontend
+  IMAGE: ghcr.io/${{ github.repository }}/frontend
   APM_JAVA_VERSION: "1.8.3326"
   APM_PUBLIC_DATA_KEY: ${{ secrets.APM_PUBLIC_DATA_KEY }}
   APM_DATA_UPLOAD_ENDPOINT: ${{ secrets.APM_DATA_UPLOAD_ENDPOINT }}
